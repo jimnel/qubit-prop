@@ -32,12 +32,14 @@ plt.tight_layout()
 
 
 # Figure 2: Propagation
-plt.figure("prop example")
-plt.plot(y[0, :, 0], label="True", lw=2)
-plt.plot(preds[0, :, 0], label="Pred", ls="--", lw=2)
-plt.xlabel("Iterations")
-plt.ylabel("x compoennet")
-plt.legend()
+fig, axs = plt.subplots(nrows=3, num="prop example", sharex="col")
+labels = ['x', 'y', 'z']
+for i in range(3):
+    axs[i].plot(y[0, :, i], label="True", lw=2)
+    axs[i].plot(preds[0, :, i], label="Pred", ls="--", lw=2)
+    axs[i].set_ylabel(r"$\langle \sigma_%s \rangle$" % labels[i])
+axs[-1].set_xlabel("Iterations")
+axs[-1].legend()
 plt.tight_layout()
 
 plt.show()
