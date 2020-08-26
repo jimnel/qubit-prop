@@ -4,13 +4,14 @@ import matplotlib.pyplot as plt
 
 plt.rcParams.update({'font.size': 13})
 
-x = np.load("bloch_evos.npy")
+data = np.load("DATA/data.npy", allow_pickle=True).item()
+
+T = np.arange(data['bloch_vectors'].shape[1]) * data['dt']
 
 plt.figure("vector norm")
-r = np.sqrt((x[:10]**2).sum(-1))
-plt.plot(r.T, c="C0", lw=0.4)
-plt.plot(r.mean(0), c="k")
-plt.xlabel("Iterations")
+r = np.sqrt((data['bloch_vectors'][:10]**2).sum(-1))
+plt.plot(T, r.T, c="C0", lw=2)
+plt.xlabel("Time")
 plt.ylabel("Block Vector Magnitude")
 plt.tight_layout()
 

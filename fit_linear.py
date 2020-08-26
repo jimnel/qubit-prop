@@ -17,14 +17,14 @@ def fit_linear_reg(X, Y):
     cov_inv = np.linalg.inv(cov)
     return np.dot(cov_inv, tmp)
 
-
-x = np.load("bloch_evos.npy")
-dt = 4  # time step
+data = np.load("DATA/data.npy", allow_pickle=True).item()
+x = data['bloch_vectors']
 
 x0 = x[:, 0]  # initial states
-y = x[:, dt]  # states at time dt
+y = x[:, 1]  # states at first time step
 beta = fit_linear_reg(x0, y)
 
+print("The weights are:\n", beta)
 
 # view weights
 plt.figure("weights")
@@ -32,9 +32,7 @@ plt.title("Regression Weights")
 sns.heatmap(beta, annot=True, cmap="YlGnBu")
 
 
-# save dt and the regression weights
-fit_params = {"beta": beta,
-              "dt": dt}
+# save the regression weights
 
-np.save("fit_params", fit_params)
+np.save("DATA/fit_params", beta)
 plt.show()
